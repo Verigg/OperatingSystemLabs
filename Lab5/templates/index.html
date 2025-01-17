@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .table-container {
+            flex: 1;
+            padding: 10px;
+        }
+        .chart-container {
+            flex: 2;
+            padding: 10px;
+        }
+        @media (max-width: 800px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-2">
+        <h1 class="text-center">Temperature Dashboard</h1>
+        <div class="dashboard-container mt-1">
+            <!-- Таблица -->
+            <div class="table-container">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Temperature (°C)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in table_data %}
+                            <tr>
+                                <td>{{ row.timestamp }}</td>
+                                <td>{{ row.temperature }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <style>
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    td {
+                        padding: 2px 5px;
+                        font-size: 12px;
+                        font-family: Arial, sans-serif;
+                        line-height: 1.2;
+                    }
+                    tr {
+                        height: auto;
+                    }
+                </style>
+            </div>
+            <!-- График -->
+            <div class="chart-container">
+                <div id="chart"></div>
+                <script>
+                    var graph = {{ graph_json | safe }};
+                    Plotly.newPlot('chart', graph.data, graph.layout);
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
