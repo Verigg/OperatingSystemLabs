@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <sqlite3.h>
 #include "httplib.h"
-#include "SerialPort.h".
+#include "SerialPort.h"
 
 #ifdef _WIN32
 #include <windows.h>
