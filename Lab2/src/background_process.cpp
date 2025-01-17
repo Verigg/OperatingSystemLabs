@@ -46,7 +46,6 @@ std::optional<int> run(const std::string& program, const std::string& args, bool
 
     // Запускаем процесс
     if (!CreateProcessA(nullptr, command.data(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &si, &pi)) {
-        std::cout << "Program started with PID: " << pi.dwProcessId << std::endl; // Выводим PID запущенной программы
         // Закрываем дескрипторы pipe при неудаче
         if (captureOutput) {
             CloseHandle(hStdOutRead);
@@ -54,7 +53,9 @@ std::optional<int> run(const std::string& program, const std::string& args, bool
         }
         return std::nullopt; // Если запуск не удалось, возвращаем null
     }
-
+    
+    std::cout << "Program started with PID: " << pi.dwProcessId << std::endl; // Выводим PID запущенной программы
+    
     if (captureOutput) {
         CloseHandle(hStdOutWrite); // Закрываем дескриптор записи после запуска
 
