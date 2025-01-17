@@ -132,7 +132,7 @@ std::string readFromSerial(float fd) {
 void logTemperature(const std::string& logFile, float temperature) {
     std::ofstream log(logFile, std::ios::app);
     std::time_t now = std::time(nullptr);
-    log << now << " " << temperature << std::endl;
+    log << now << " " << std::setprecision(3) << temperature << std::endl;
 }
 
 std::vector<std::pair<std::time_t, int>> filterLogData(const std::string& logFile, int maxAgeInSeconds) {
