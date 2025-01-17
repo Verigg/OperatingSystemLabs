@@ -24,8 +24,6 @@ int main() {
         return 1; 
     }
 
-    std::cout << "Program started with PID: " << *pid << std::endl; // Выводим PID запущенной программы
-
     auto exitCode = BackgroundProcess::wait(*pid); // Ожидаем завершения программы и получаем код выхода
     if (!exitCode) {
         std::cerr << "Failed to retrieve exit code." << std::endl;
