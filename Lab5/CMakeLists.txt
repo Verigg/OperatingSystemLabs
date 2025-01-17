@@ -23,5 +23,8 @@ set(EMULATOR_SOURCES
 )
 
 add_executable(Server ${SERVER_SOURCES})
+if (WIN32)
+    target_link_libraries(Server Ws2_32)
+endif()
 
 add_executable(Emulator ${EMULATOR_SOURCES})
