@@ -1,5 +1,6 @@
 #include "background_process.h" // Подключаем заголовочный файл для работы с фоновыми процессами
 #include <iostream> 
+#include <chrono>
 
 int main() {
     std::string program;
