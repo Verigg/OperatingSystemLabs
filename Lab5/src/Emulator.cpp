@@ -4,7 +4,7 @@
 #include <ctime>
 #include <thread>
 #include <iomanip>
-#include "SerialPort.h".
+#include "SerialPort.h"
 #ifdef _WIN32
 #include <windows.h>
 #else
