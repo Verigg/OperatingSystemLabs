@@ -31,5 +31,6 @@ int main() {
     }
 
     std::cout << "Program exited with code: " << *exitCode << std::endl; // Выводим код выхода программы
+    std::this_thread::sleep_for(std::chrono::seconds(3));
     return 0; // Успешное завершение программы
 }
