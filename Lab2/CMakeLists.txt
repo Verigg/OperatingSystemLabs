@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
-    background_process.h
-    background_process.cpp
-    main.cpp
+    src/background_process.h
+    src/background_process.cpp
+    src/main.cpp
 )
 
 add_executable(BackgroundProcessExample ${SOURCES})
