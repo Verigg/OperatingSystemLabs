@@ -22,12 +22,12 @@ set(EMULATOR_SOURCES
     ${SERIAL_PORT}
 )
 
+add_executable(Server ${SERVER_SOURCES})
+
 if (WIN32)
     target_link_libraries(Server Ws2_32 sqlite3)
 else()
     target_link_libraries(Server sqlite3)
 endif()
-
-add_executable(Server ${SERVER_SOURCES})
 
 add_executable(Emulator ${EMULATOR_SOURCES})
