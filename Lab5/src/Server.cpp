@@ -22,32 +22,6 @@
 #endif
 #include <filesystem>
 
-#ifdef _WIN32
-std::string readFromSerial(HANDLE hSerial) {
-    char buffer[64] = {0};
-    DWORD bytesRead = 0;
-    if (ReadFile(hSerial, buffer, sizeof(buffer) - 1, &bytesRead, nullptr)) {
-        buffer[bytesRead] = '\0';
-        return std::string(buffer);
-    } else {
-        std::cerr << "Error reading from serial port\n";
-        return "";
-    }
-}
-#else
-std::string readFromSerial(int fd) {
-    char buffer[64] = {0};
-    int bytesRead = read(fd, buffer, sizeof(buffer) - 1);
-    if (bytesRead > 0) {
-        buffer[bytesRead] = '\0';
-        return std::string(buffer);
-    } else {
-        perror("Error reading from serial port");
-        return "";
-    }
-}
-#endif
-
 // Функции работы с базой данных
 void initializeDatabase(sqlite3* &db) {
     std::filesystem::create_directories("../database");
