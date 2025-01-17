@@ -135,9 +135,9 @@ void logTemperature(const std::string& logFile, float temperature) {
     log << now << " "  << std::fixed << std::setprecision(2) << temperature << std::endl;
 }
 
-std::vector<std::pair<std::time_t, int>> filterLogData(const std::string& logFile, int maxAgeInSeconds) {
+std::vector<std::pair<std::time_t, float>> filterLogData(const std::string& logFile, int maxAgeInSeconds) {
     std::ifstream inFile(logFile);
-    std::vector<std::pair<std::time_t, int>> filteredData;
+    std::vector<std::pair<std::time_t, float>> filteredData;
     std::string line;
     std::time_t now = std::time(nullptr);
 
