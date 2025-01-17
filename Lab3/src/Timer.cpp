@@ -360,8 +360,7 @@ void counter_increment_thread() {
 void user_input_thread() {
     while (!stop_flag) {
         std::string input;
-        std::cout << "Enter command (set <value>, get, stop): " << std::endl;
-        std::getline(std::cin, input);
+        std::cout << "Enter command (set <value>, get): " << std::endl;
 
         if (!std::getline(std::cin, input)) {
             std::cout << "Input stream closed. Stopping thread." << std::endl;
@@ -381,7 +380,7 @@ void user_input_thread() {
             int current_value = *shared_counter;
             std::cout << "Current counter value: " << current_value << std::endl;
         } else {
-            std::cout << "Unknown command. Available commands: set <value>, get, stop." << std::endl;
+            std::cout << "Unknown command. Available commands: set <value>, get." << std::endl;
         }
     }
 }
