@@ -12,11 +12,11 @@ else()
 endif()
 
 set(EMULATOR_SOURCES
-    src/emulator.cpp
+    src/Emulator.cpp
 )
 
 set(LOGGER_SOURCES
-    src/logger.cpp
+    src/Logger.cpp
 )
 
 if (WIN32)
