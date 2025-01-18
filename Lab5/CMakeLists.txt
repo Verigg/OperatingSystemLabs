@@ -26,21 +26,17 @@ add_library(SerialPort ${SERIAL_PORT})
 target_include_directories(SerialPort PRIVATE ${INCLUDE_DIR})
 
 add_executable(Server ${SERVER_SOURCES})
-target_link_libraries(Server PRIVATE SerialPort SQLite3)
+target_link_libraries(Server PRIVATE SerialPort sqlite3)
 
 if (WIN32)
     target_link_libraries(Server PRIVATE Ws2_32)
+    target_link_libraries(Server Ws2_32 sqlite3)
     target_compile_definitions(Server PRIVATE WINDOWS)
+else()
+    target_link_libraries(Server sqlite3)
 endif()
 
 add_executable(Emulator ${EMULATOR_SOURCES})
 target_link_libraries(Emulator PRIVATE SerialPort)
-
-
-if (WIN32)
-    target_link_libraries(Server Ws2_32 SQLite3)
-else()
-    target_link_libraries(Server SQLite3)
-endif()
 
 add_executable(Emulator ${EMULATOR_SOURCES})
