@@ -30,10 +30,7 @@ target_link_libraries(Server PRIVATE SerialPort sqlite3)
 
 if (WIN32)
     target_link_libraries(Server PRIVATE Ws2_32)
-    target_link_libraries(Server Ws2_32 sqlite3)
     target_compile_definitions(Server PRIVATE WINDOWS)
-else()
-    target_link_libraries(Server sqlite3)
 endif()
 
 add_executable(Emulator ${EMULATOR_SOURCES})
