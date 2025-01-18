@@ -22,6 +22,15 @@ set(EMULATOR_SOURCES
     ${SERIAL_PORT}
 )
 
+include(FetchContent)
+
+FetchContent_Declare(
+    SQLite3
+    GIT_REPOSITORY https://github.com/sqlite/sqlite.git
+    GIT_TAG        version-3.42.0 
+)
+FetchContent_MakeAvailable(SQLite3)
+
 add_executable(Server ${SERVER_SOURCES})
 
 if (WIN32)
