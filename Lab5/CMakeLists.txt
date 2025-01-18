@@ -5,8 +5,8 @@ project(TemperatureMonitor)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
-set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(SRC_DIR src)
+set(INCLUDE_DIR include)
 
 include_directories(${INCLUDE_DIR})
 
@@ -23,18 +23,32 @@ set(EMULATOR_SOURCES
 )
 
 include(FetchContent)
-
 FetchContent_Declare(
     SQLite3
     GIT_REPOSITORY https://github.com/sqlite/sqlite.git
-    GIT_TAG        version-3.42.0 
+    GIT_TAG        version-3.42.0
+    GIT_SHALLOW    TRUE
+    GIT_PROGRESS   TRUE
 )
 FetchContent_MakeAvailable(SQLite3)
 
+add_library(SerialPort ${SERIAL_PORT})
+target_include_directories(SerialPort PRIVATE ${INCLUDE_DIR})
+
 add_executable(Server ${SERVER_SOURCES})
+target_link_libraries(Server PRIVATE SerialPort SQLite3)
 
 if (WIN32)
-    target_link_libraries(Server Ws2_32 sqlite3)
+    target_link_libraries(Server PRIVATE Ws2_32)
+    target_compile_definitions(Server PRIVATE WINDOWS)
+endif()
+
+add_executable(Emulator ${EMULATOR_SOURCES})
+target_link_libraries(Emulator PRIVATE SerialPort)
+
+
+if (WIN32)
+    target_link_libraries(Server Ws2_32 SQLite3)
 else()
     target_link_libraries(Server SQLite3)
 endif()
