@@ -116,9 +116,9 @@ std::string readFromSerial(HANDLE hSerial) {
     }
 }
 #else
-std::string readFromSerial(float fd) {
+std::string readFromSerial(int fd) {
     char buffer[64] = {0};
-    float bytesRead = read(fd, buffer, sizeof(buffer) - 1);
+    int bytesRead = read(fd, buffer, sizeof(buffer) - 1);
     if (bytesRead > 0) {
         buffer[bytesRead] = '\0';
         return std::string(buffer);
