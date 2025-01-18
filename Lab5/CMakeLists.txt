@@ -22,16 +22,6 @@ set(EMULATOR_SOURCES
     ${SERIAL_PORT}
 )
 
-include(FetchContent)
-FetchContent_Declare(
-    SQLite3
-    GIT_REPOSITORY https://github.com/sqlite/sqlite.git
-    GIT_TAG        version-3.42.0
-    GIT_SHALLOW    TRUE
-    GIT_PROGRESS   TRUE
-)
-FetchContent_MakeAvailable(SQLite3)
-
 add_library(SerialPort ${SERIAL_PORT})
 target_include_directories(SerialPort PRIVATE ${INCLUDE_DIR})
 
