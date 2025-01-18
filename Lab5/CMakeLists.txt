@@ -36,7 +36,7 @@ add_executable(Server ${SERVER_SOURCES})
 if (WIN32)
     target_link_libraries(Server Ws2_32 sqlite3)
 else()
-    target_link_libraries(Server sqlite3)
+    target_link_libraries(Server SQLite3)
 endif()
 
 add_executable(Emulator ${EMULATOR_SOURCES})
