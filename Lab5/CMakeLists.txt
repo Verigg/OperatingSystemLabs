@@ -39,4 +39,3 @@ endif()
 add_executable(Emulator ${EMULATOR_SOURCES})
 target_link_libraries(Emulator PRIVATE SerialPort)
 
-add_executable(Emulator ${EMULATOR_SOURCES})
