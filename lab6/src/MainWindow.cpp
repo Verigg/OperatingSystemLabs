@@ -17,14 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if (!ui) {
         std::cerr << "Error: UI object is null!" << std::endl;
-        exit(1); // Critical error
+        exit(1); 
     }
     ui->setupUi(this);
     std::cout << "MainWindow constructor: UI setup completed." << std::endl;
 
     if (!networkManager) {
         std::cerr << "Error: Network manager is null!" << std::endl;
-        exit(1); // Critical error
+        exit(1); 
     }
     connect(ui->updateButton, &QPushButton::clicked, this, &MainWindow::fetchTemperatureStats);
     connect(networkManager, &QNetworkAccessManager::finished, this, &MainWindow::onStatsReply);
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 MainWindow::~MainWindow() {
-    delete ui; // Deleting UI object
+    delete ui; 
 }
 
 void MainWindow::fetchCurrentTemperature() {
@@ -46,9 +46,9 @@ void MainWindow::fetchCurrentTemperature() {
         return;
     }
 
-    QString url = "http://localhost:8080/current"; // URL as string directly
+    QString url = "http://localhost:8080/current"; 
 
-    QNetworkRequest request(url); // Use the URL string directly in QNetworkRequest
+    QNetworkRequest request(url); 
 
     QNetworkReply *reply = networkManager->get(request);
 
@@ -78,7 +78,7 @@ void MainWindow::fetchTemperatureStats() {
                     .arg(startTime.toSecsSinceEpoch())
                     .arg(endTime.toSecsSinceEpoch());
 
-    QNetworkRequest request(url); // Use the URL string directly in QNetworkRequest
+    QNetworkRequest request(url); 
     QNetworkReply *reply = networkManager->get(request);
 
     connect(reply, &QNetworkReply::finished, this, [this, reply]() {
