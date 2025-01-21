@@ -40,9 +40,9 @@ std::atomic<bool> stop_flag(false);
 std::vector<std::thread> threads;
 std::ofstream log_file;
 
-/**
- * Sets up shared memory for the counter and leader flag.
- */
+
+// Sets up shared memory for the counter and leader flag.
+
 void setup_shared_memory() {
 #ifdef _WIN32
     HANDLE hMapFile = OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, "SharedCounter");
@@ -110,9 +110,8 @@ void setup_shared_memory() {
 #endif
 }
 
-/**
- * Sets up synchronization mechanisms for logging.
- */
+
+// Sets up synchronization mechanisms for logging.
 void setup_log_synchronization() {
 #ifdef _WIN32
     log_mutex = CreateMutexA(NULL, FALSE, "GlobalLogMutex");
@@ -139,9 +138,9 @@ void setup_log_synchronization() {
 #endif
 }
 
-/**
- * Cleans up shared memory resources.
- */
+
+//Cleans up shared memory resources.
+
 void cleanup_shared_memory() {
 #ifdef _WIN32
     if (shared_counter || is_leader) {
@@ -156,9 +155,8 @@ void cleanup_shared_memory() {
 #endif
 }
 
-/**
- * Cleans up synchronization resources for logging.
- */
+
+ // Cleans up synchronization resources for logging.
 void cleanup_log_synchronization() {
 #ifdef _WIN32
     CloseHandle(log_mutex);
@@ -171,9 +169,8 @@ void cleanup_log_synchronization() {
 #endif
 }
 
-/**
- * Function to terminate threads
- */
+
+// Function to terminate threads
 void terminate_threads() {
     std::cout << "Terminate threads...\n";
     stop_flag = true;
@@ -187,9 +184,8 @@ void terminate_threads() {
     std::cout << "All threads are terminated.\n";
 }
 
-/**
- * Utility function to get current time
- */
+
+// Utility function to get current time
 std::string get_current_time() {
     auto now = std::chrono::system_clock::now();
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
@@ -202,9 +198,8 @@ std::string get_current_time() {
     return std::string(buffer) + "." + std::to_string(ms.count());
 }
 
-/**
- * Logs a message with a timestamp.
- */
+
+// Logs a message with a timestamp.
 void log_message(const std::string& message) {
 #ifdef _WIN32
     WaitForSingleObject(log_mutex, INFINITE);
@@ -222,7 +217,7 @@ void log_message(const std::string& message) {
 #endif
 }
 
-
+// Sets counter
 void safe_set_counter(int value) {
 #ifdef _WIN32
     WaitForSingleObject(counter_mutex, INFINITE);
@@ -239,9 +234,8 @@ void safe_set_counter(int value) {
 #endif
 }
 
-/**
- * Function to handle program exit
- */
+
+// Function to handle program exit
 void on_exit() {
 
     if (is_leader_instance) {
@@ -266,9 +260,7 @@ void on_exit() {
     exit(0);
 }
 
-/**
- * Function to handle spawning childs
- */
+// Function to handle spawning childs
 void spawn_child_process(int id) {
 #ifdef _WIN32
     STARTUPINFOA si = { sizeof(STARTUPINFOA) };
@@ -334,9 +326,8 @@ void spawn_child_process(int id) {
 #endif
 }
 
-/**
- * Thread for logging
- */
+
+// Thread for logging
 void log_counter_thread() {
     while (!stop_flag) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -344,9 +335,8 @@ void log_counter_thread() {
     }
 }
 
-/**
- * Thread for counter increment
- */
+
+//Thread for counter increment
 void counter_increment_thread() {
     while (!stop_flag) {
         std::this_thread::sleep_for(std::chrono::milliseconds(300));
@@ -354,9 +344,7 @@ void counter_increment_thread() {
     }
 }
 
-/**
- * Thread for user input
- */
+// Thread for user input
 void user_input_thread() {
     while (!stop_flag) {
         std::string input;

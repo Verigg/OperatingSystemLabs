@@ -118,7 +118,7 @@ int main() {
 #ifdef _WIN32
         "COM7";
 #else
-        "/dev/ttyS1"; // Замените на ваш порт в POSIX
+        "/dev/ttyS1";
 #endif
 
     auto serialPort = initializeSerialPort(port);
