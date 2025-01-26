@@ -5,5 +5,5 @@ cmake .. -G "MinGW Makefiles"
 
 cmake --build .
 
-./main.exe
+TemperatureClientApp.exe
 
