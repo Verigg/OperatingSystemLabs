@@ -48,9 +48,9 @@ void MainWindow::fetchCurrentTemperature() {
 
     QString url = "http://localhost:8080/current"; 
 
-    QNetworkRequest request(url); 
+    QNetworkRequest request((QUrl(url))); 
 
-    QNetworkReply *reply = networkManager->get(request);
+    auto *reply = networkManager->get(request);
 
     if (!reply) {
         std::cerr << "Failed to create QNetworkReply object." << std::endl;
@@ -66,6 +66,7 @@ void MainWindow::fetchCurrentTemperature() {
             onCurrentReply(reply);
         }
         reply->deleteLater();
+        return;
     });
 }
 

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-project(TemperatureClientApp)
+
+project(TemperatureClientApp LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -10,48 +11,48 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(WIN32)
     set(Qt6_DIR "C:/CppLibs/Qt/6.8.1/mingw_64/lib/cmake/Qt6")
-    set(QWT_INCLUDE_DIR "C:/CppLibs/qwt-6.3.0/src")
-    set(QWT_LIBRARY "C:/CppLibs/qwt-6.3.0/lib/libqwt.a")  
-    list(APPEND CMAKE_PREFIX_PATH "C:/CppLibs/Qt/6.8.1/mingw_64")
-elseif(UNIX)
-    set(Qt6_DIR "/usr/lib/cmake/Qt6")
-    set(QWT_INCLUDE_DIR "/usr/local/include/qwt")
-    set(QWT_LIBRARY "/usr/local/lib/libqwt.a")  
-    list(APPEND CMAKE_PREFIX_PATH "/usr/lib/qt6")
+    set(QWT_INCLUDE_DIR "C:/CppLibs/Qwt-6.3.0/src")
+    set(QWT_LIB_DIR "C:/CppLibs/Qwt-6.3.0/lib/")
+    set(QWT_LIBRARY "C:/CppLibs/Qwt-6.3.0/lib/libqwt.a")
 endif()
 
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
-
-qt6_wrap_ui(HEADERS src/MainWindow.ui)
+include_directories(${QWT_INCLUDE_DIR})
+link_directories(${QWT_LIB_DIR})
 
 set(SOURCES
     src/main.cpp
     src/MainWindow.cpp
 )
 
-set(UI
-    src/MainWindow.ui
-)
-
 set(HEADERS
     src/MainWindow.h
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UI})
-
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${QWT_INCLUDE_DIR}
-    ${Qt6_INCLUDE_DIRS}
+set(UI
+    src/MainWindow.ui
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+qt_add_executable(TemperatureClientApp
+    ${SOURCES}
+    ${HEADERS}
+    ${UI}
+)
+
+target_link_libraries(TemperatureClientApp PRIVATE
+    Qt6::Core
+    Qt6::Gui
     Qt6::Widgets
     Qt6::Network
-    ${QWT_LIBRARY}
 )
 
+target_include_directories(TemperatureClientApp PRIVATE ${QWT_INCLUDE_DIR})
+target_link_libraries(TemperatureClientApp PRIVATE ${QWT_LIBRARY})
+
+include_directories(${Qt6_INCLUDE_DIR} ${QWT_INCLUDE_DIR})
+
 if(WIN32)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE WIN32_LEAN_AND_MEAN)
+    add_definitions(-DWIN32)
+    add_compile_options(/EHsc)
 endif()
