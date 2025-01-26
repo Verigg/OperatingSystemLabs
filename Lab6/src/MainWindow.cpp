@@ -11,7 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     networkManager(new QNetworkAccessManager(this)),
-    temperatureCurve(new QwtPlotCurve("Temperature"))
+    temperatureCurve(new QwtPlotCurve("Temperature")),
+    updateTimer(new QTimer(this))
 {
     std::cout << "MainWindow constructor: Starting initialization..." << std::endl;
 
@@ -31,10 +32,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     std::cout << "MainWindow constructor: Signals connected." << std::endl;
 
+    connect(updateTimer, &QTimer::timeout, this, &MainWindow::fetchCurrentTemperature);
+    updateTimer->start(100);
+
     fetchCurrentTemperature();
 }
 
 MainWindow::~MainWindow() {
+    updateTimer->stop();
     delete ui; 
 }
 
@@ -105,7 +110,6 @@ void MainWindow::onCurrentReply(QNetworkReply *reply) {
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     if (doc.isNull() || !doc.isObject()) {
         std::cerr << "Invalid JSON format in current temperature reply." << std::endl;
-        ui->currentTemperatureLabel->setText("Invalid data received.");
         return;
     }
 

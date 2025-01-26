@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +31,7 @@ private:
     Ui::MainWindow *ui;
     QNetworkAccessManager *networkManager;
     QwtPlotCurve *temperatureCurve;
+    QTimer *updateTimer;
 
     void updateGraph(const QVector<double> &timestamps, const QVector<double> &temperatures);
 };
