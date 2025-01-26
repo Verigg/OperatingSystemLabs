@@ -24,4 +24,10 @@ win32 {
     DEFINES += WIN32
 }
 
+unix{
+	INCLUDEPATH += /usr/include/qwt
+	LIBS += -L/usr/lib -lqwt-qt5
+}
+
+
 CONFIG += qmake_qt_autogen

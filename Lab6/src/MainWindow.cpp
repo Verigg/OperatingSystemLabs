@@ -46,7 +46,7 @@ void MainWindow::fetchCurrentTemperature() {
         return;
     }
 
-    QString url = "http://localhost:8080/current"; 
+    QString url = QString("http://localhost:8080/current"); 
 
     QNetworkRequest request((QUrl(url))); 
 

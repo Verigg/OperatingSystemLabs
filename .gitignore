@@ -4,4 +4,10 @@
 /Lab4/build/
 /Lab5/build/
 /Lab6/build/
-
+/Lab6/debug/
+/Lab6/release/
+/Lab6/Makefile
+/Lab6/Makefile.Debug
+/Lab6/Makefile.Release
+/Lab6/.qmake.stash
+/Lab6/ui_MainWindow.h
