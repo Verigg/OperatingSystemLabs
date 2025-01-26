@@ -5,4 +5,4 @@ cmake ../
 
 cmake --build .
 
-./main
+./TemperatureClientApp
